@@ -6,23 +6,7 @@ def debug(msg):
 
 
 def main():
-    def initialize_game():
-        # n: the total number of nodes in the level, including the gateways
-        # l: the number of links
-        # e: the number of exit gateways
-        n, l, e = [int(i) for i in input().split()]
-        links = []
-        exits = []
-        for i in range(l):
-            n1, n2 = [int(j) for j in input().split()]
-            links.append(Link(n1, n2))
-        for i in range(e):
-            ei = int(input())
-            exits.append(ei)
-
-        return Game(links, exits)
-
-    game = initialize_game()
+    game = Game.initialize_from_input()
 
     while True:
         def read_skynet_location():
@@ -54,6 +38,23 @@ class Link:
 
 
 class Game:
+    @classmethod
+    def initialize_from_input(cls):
+        # n: the total number of nodes in the level, including the gateways
+        # l: the number of links
+        # e: the number of exit gateways
+        n, l, e = [int(i) for i in input().split()]
+        links = []
+        exits = []
+        for i in range(l):
+            n1, n2 = [int(j) for j in input().split()]
+            links.append(Link(n1, n2))
+        for i in range(e):
+            ei = int(input())
+            exits.append(ei)
+
+        return cls(links, exits)
+
     def __init__(self, links, exits, proactive=True):
         self.links = links
         self.links_cut = []
